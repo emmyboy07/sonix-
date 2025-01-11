@@ -25,7 +25,7 @@ async function searchAndDownloadMovie(movieName) {
 
     const browser = await puppeteer.launch({
         executablePath: chromePath,
-        headless: false,
+        headless: true,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
