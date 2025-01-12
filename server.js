@@ -21,10 +21,10 @@ async function retryAction(action, retries = 3, delay = 2000) {
 }
 
 async function searchAndDownloadMovie(movieName) {
-    const chromePath = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+    const chromePath = process.env.CHROME_PATH || '/usr/bin/google-chrome';
 
     const browser = await puppeteer.launch({
-        executablePath: '/usr/bin/google-chrome', // Path to system-wide Chrome
+        executablePath: chromePath, // Path to system-wide Chrome
         headless: true,
         args: [
             '--no-sandbox',
