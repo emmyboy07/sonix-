@@ -1,5 +1,5 @@
 const path = require('path');
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -21,10 +21,7 @@ async function retryAction(action, retries = 3, delay = 2000) {
 }
 
 async function searchAndDownloadMovie(movieName) {
-    const chromePath = process.env.CHROME_PATH || '/usr/bin/google-chrome';
-
     const browser = await puppeteer.launch({
-        executablePath: chromePath, // Path to system-wide Chrome
         headless: true,
         args: [
             '--no-sandbox',
