@@ -1,32 +1,45 @@
-# Use the official Node.js image as a base image
+# Use an official Node.js runtime as a parent image
 FROM node:16-slim
-
-# Install necessary dependencies, including Chromium
-RUN apt-get update && apt-get install -y \
-    wget \
-    ca-certificates \
-    fonts-liberation \
-    libappindicator3-1 \
-    libasound2 \
-    libx11-xcb1 \
-    libxtst6 \
-    libnss3 \
-    chromium
-
-# Set the environment variable for Chromium's path
-ENV CHROME_PATH=/usr/bin/chromium
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy all the files from the current directory to the /app directory in the container
-COPY . .
+# Install dependencies required for Chromium
+RUN apt-get update && apt-get install -y \
+  fonts-liberation \
+  libappindicator3-1 \
+  libasound2 \
+  libatk-bridge2.0-0 \
+  libcups2 \
+  libdbus-1-3 \
+  libgbm-dev \
+  libnspr4 \
+  libnss3 \
+  libx11-xcb1 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxrandr2 \
+  xdg-utils \
+  wget \
+  libu2f-udev \
+  chromium \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies defined in package.json
+# Set environment variable for Puppeteer to use Chromium
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV CHROME_PATH=/usr/bin/chromium
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+
+# Install Node.js dependencies
 RUN npm install
 
-# Expose the port your app will run on (3000 is the default in your code)
+# Copy the rest of the application files to the container
+COPY . .
+
+# Expose port 3000 for the application
 EXPOSE 3000
 
-# Command to run your app (same as `npm start`)
-CMD ["npm", "start"]
+# Command to run the application
+CMD ["node", "server.js"]
