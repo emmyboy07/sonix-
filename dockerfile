@@ -1,14 +1,18 @@
-# Use official Node.js image as the base
+# Use official Node.js image
 FROM node:16
 
-# Install Chromium dependencies for Puppeteer
+# Set working directory
+WORKDIR /app
+
+# Install Chromium dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
     fonts-liberation \
+    libappindicator3-1 \
     libasound2 \
-    libatk1.0-0 \
     libatk-bridge2.0-0 \
+    libatk1.0-0 \
     libcups2 \
     libdbus-1-3 \
     libgdk-pixbuf2.0-0 \
@@ -18,27 +22,21 @@ RUN apt-get update && apt-get install -y \
     libxcomposite1 \
     libxdamage1 \
     libxrandr2 \
-    libxss1 \
-    libxtst6 \
     xdg-utils \
-    --no-install-recommends && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /app
+# Install Puppeteer
+RUN npm install puppeteer
 
-# Copy package.json and package-lock.json to install dependencies
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the application files
+# Copy all the necessary files into the container
 COPY . .
 
-# Set environment variable for Chromium path
-ENV CHROME_PATH="/usr/bin/google-chrome"
-
-# Expose the port used by the application
+# Expose the port
 EXPOSE 3000
 
-# Run the application
+# Start the application
 CMD ["node", "server.js"]
