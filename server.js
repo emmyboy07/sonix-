@@ -22,6 +22,7 @@ async function retryAction(action, retries = 3, delay = 2000) {
 
 async function searchAndDownloadMovie(movieName) {
     const browser = await puppeteer.launch({
+        executablePath: puppeteer.executablePath(), // Use Puppeteer's resolved path for Chrome
         headless: true,
         args: [
             '--no-sandbox',

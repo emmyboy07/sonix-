@@ -17,7 +17,8 @@
     "start": "node server.js",
     "start:dev": "nodemon server.js",
     "build": "echo 'No build step required'",
-    "test": "echo 'No tests specified' && exit 0"
+    "test": "echo 'No tests specified' && exit 0",
+    "postinstall": "npx puppeteer install"
   },
   "engines": {
     "node": ">=16"
@@ -26,8 +27,8 @@
     "movie",
     "downloader",
     "puppeteer",
-    "express"
-  ],
-  "author": "Anakwe Emmanuel",
-  "license": "MIT"
+    "playwright",
+    "express",
+    "backend"
+  ]
 }
