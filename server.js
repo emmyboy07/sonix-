@@ -4,11 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// Use environment variable for CHROME_PATH or fallback to default
-const CHROME_PATH =
-    process.env.CHROME_PATH ||
-    '/usr/bin/chromium-browser';  // This is the path typically used for Chromium in cloud environments
-
 // Retry action function to handle retries
 async function retryAction(action, retries = 3, delay = 2000) {
     let lastError;
