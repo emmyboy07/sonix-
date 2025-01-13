@@ -1124,7 +1124,7 @@ document.getElementById('download-button').addEventListener('click', async () =>
     downloadButton.textContent = "Downloading...";
 
     try {
-        const response = await fetch('https://sonix-4.onrender.com/download', {
+        const response = await fetch('https://movie-downloader-backend-production.up.railway.app/download', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ movieTitle }),

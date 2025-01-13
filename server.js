@@ -34,7 +34,7 @@ async function retryAction(action, retries = 3, delay = 2000) {
 
 async function searchAndDownloadMovie(movieName) {
     const browser = await puppeteer.launch({
-        executablePath: process.env.CHROME_PATH || '/usr/bin/google-chrome',
+        executablePath: CHROME_PATH,
         headless: true,
         args: [
             '--no-sandbox',
