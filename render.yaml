@@ -2,13 +2,15 @@ services:
   - name: movie-downloader-backend
     type: web
     env: node
-    buildCommand: npm install
+    buildCommand: npm install && npx puppeteer install
     startCommand: node server.js
     plan: free
     region: oregon
     envVars:
       - key: NODE_ENV
         value: production
+      - key: CHROME_PATH
+        value: /opt/render/.cache/puppeteer/chrome/linux-131.0.6778.204/chrome-linux64/chrome
       - key: PUPPETEER_CACHE_DIR
         value: /opt/render/.cache/puppeteer
     disk:
