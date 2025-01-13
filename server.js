@@ -4,18 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+// Use environment variable for CHROME_PATH or fallback to default
 const CHROME_PATH =
     process.env.CHROME_PATH ||
-    path.join(
-        process.cwd(),
-        'node_modules',
-        'puppeteer',
-        '.local-chromium',
-        'linux-131.0.6778.204',
-        'chrome-linux64',
-        'chrome'
-    );
+    '/usr/bin/chromium-browser';  // This is the path typically used for Chromium in cloud environments
 
+// Retry action function to handle retries
 async function retryAction(action, retries = 3, delay = 2000) {
     let lastError;
     for (let attempt = 1; attempt <= retries; attempt++) {
@@ -32,9 +26,10 @@ async function retryAction(action, retries = 3, delay = 2000) {
     throw lastError;
 }
 
+// Main function to search and simulate movie download
 async function searchAndDownloadMovie(movieName) {
     const browser = await puppeteer.launch({
-        executablePath: CHROME_PATH,
+        executablePath: CHROME_PATH,  // Use the configured Chrome path
         headless: true,
         args: [
             '--no-sandbox',
@@ -127,6 +122,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Serve static frontend files (optional if you have a frontend)
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/download', async (req, res) => {

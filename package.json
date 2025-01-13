@@ -16,7 +16,7 @@
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon server.js",
-    "build": "echo 'No build step required'",
+    "build": "bash install_chrome.sh && npm install",
     "test": "echo 'No tests specified' && exit 0",
     "postinstall": "npx puppeteer install"
   },
@@ -29,6 +29,9 @@
     "puppeteer",
     "playwright",
     "express",
-    "backend"
-  ]
+    "backend",
+    "chromium"
+  ],
+  "author": "Anakwe Emmanuel",
+  "license": "MIT"
 }
